@@ -1,36 +1,19 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Satellite Tracker
 
-## Getting Started
+> Powered by THREE.js, Next.js 14, with blazing fast speed (sort of..) 😎
 
-First, run the development server:
+This is a small project when I am working on my Lab Project, which is making a satellite tracker to be displayed on a big screen.
+This project was inspired by [satellite tracker 3d](https://satellitetracker3d.com/) which definitely need to check out because it it so cool.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Fully controlled: No third party library, just pure THREE.js.
+- Cached Sat Data: The satellite data is cached in the server, so it will not be calculated every time the page is loaded.
+- Controllable line thickness: You can control the line thickness of the satellite orbit.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## TODO
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Use Point cloud to render the satellite instead of using a sphere.
+- Add interactive control to the satellite.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
