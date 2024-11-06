@@ -2,6 +2,9 @@
 
 > Powered by THREE.js, Next.js 14, with blazing fast speed (sort of..) 😎
 
+![apps](https://github.com/user-attachments/assets/92c3335f-1671-43fa-84a8-be9c481b3cf5)
+
+
 This is a small project when I am working on my Lab Project, which is making a satellite tracker to be displayed on a big screen.
 This project was inspired by [satellite tracker 3d](https://satellitetracker3d.com/) which definitely need to check out because it it so cool.
 
