@@ -1,5 +1,12 @@
 import {generateColor} from "@marko19907/string-to-color";
 import {config} from "@/app.config";
+import {CameraControls} from "@react-three/drei";
+import * as THREE from "three";
+import {Mesh, Vector3} from "three";
+
+export function degreesToRadians(degrees: number): number {
+  return degrees * (Math.PI / 180);
+}
 
 export function radiansToDegrees(radians: number): number {
   return radians * (180 / Math.PI);
@@ -32,4 +39,38 @@ function hslToHex(h: number, s: number, l: number): string {
   const b = Math.round(255 * f(4));
 
   return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+}
+
+export function isValid(value: number | string | null | undefined): boolean {
+  return value !== null && value !== undefined && value !== -1;
+}
+
+export function lookAtObject(cameraControls: CameraControls, object: Mesh, offset: [number, number, number] = [0, 0, 0]) {
+  cameraControls.setLookAt(object.position.x + offset[0], object.position.y + offset[1], object.position.z + offset[2], 0, 0, 0, true).then()
+}
+
+type lookAtSatelliteOption = {
+  // [phiAngle, thetaAngle, extendHeight]
+  offset?: [number, number, number]
+  earthCenter?: [number, number, number]
+}
+
+export function lookAtSatellite(
+  cameraControls: CameraControls,
+  satellite: Mesh,
+  options: lookAtSatelliteOption = {}
+) {
+  const { earthCenter = [0, 0, 0], offset = [0, 0, 0] } = options;
+
+  const earthCenterVector = new Vector3(...earthCenter);
+  const satVector = new Vector3().subVectors(satellite.position, earthCenterVector).normalize();
+  const length = offset[2]; // Assuming length is defined somewhere
+  const extendedVector = satVector.clone().multiplyScalar(length);
+
+  const phi = offset[0] * degreesToRadians(1);
+  const theta = offset[1] * degreesToRadians(1);
+  const rotationMatrix = new THREE.Matrix4().makeRotationFromEuler(new THREE.Euler(phi, theta, 0));
+  extendedVector.applyMatrix4(rotationMatrix);
+
+  cameraControls.setPosition(extendedVector.x, extendedVector.y, extendedVector.z, true).then();
 }

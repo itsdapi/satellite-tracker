@@ -1,16 +1,17 @@
+'use client'
+
 import {SatelliteData} from "@/app/lib/action/satellite";
 import {useEffect, useMemo, useRef} from "react";
 import * as THREE from "three";
 import {Line2, LineGeometry, LineMaterial} from "three-fatline";
 import {extend} from "@react-three/fiber";
-import {stringToHexColor} from "@/app/lib/utils";
+import {isValid, stringToHexColor} from "@/app/lib/utils";
 
 extend({Line2, LineGeometry, LineMaterial});
 
 interface OrbitProps {
   satList: SatelliteData[];
   selectedSat?: number;
-  // 0.008 is quite thick, 0.004 is pretty good
   lineWidth?: number;
 }
 
@@ -20,7 +21,7 @@ export default function Orbits({satList, selectedSat, lineWidth = 0.008}: OrbitP
     if (!Array.isArray(satList) || satList.length === 0) {
       return [];
     }
-    return satList.map(([satPositions]) => {
+    return satList.map(({position: satPositions}) => {
       const positions = new Float32Array(satPositions.length * 3);
       let index = 0;
       for (let i = 0; i < satPositions.length; i++) {
@@ -40,11 +41,11 @@ export default function Orbits({satList, selectedSat, lineWidth = 0.008}: OrbitP
     if (!Array.isArray(satList) || satList.length === 0) {
       return [];
     }
-    return satList.map(([satPositions, name], satIndex) => {
+    return satList.map(({position: satPositions, name}, satIndex) => {
       const colors = new Float32Array(satPositions.length * 3);
       let globalIndex = 0;
       const color = new THREE.Color(
-        selectedSat === undefined
+        !isValid(selectedSat)
           ? stringToHexColor(name)
           : satIndex === selectedSat
             ? 'green'
@@ -78,7 +79,7 @@ export default function Orbits({satList, selectedSat, lineWidth = 0.008}: OrbitP
         }
       });
     }
-  }, [geometries, colorsArrays, satList.length, satList]);
+  }, [geometries, colorsArrays, satList.length, satList, lineWidth]);
   return (
     <group ref={lineRef}/>
   );

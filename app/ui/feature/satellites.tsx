@@ -3,9 +3,9 @@ import {useRef} from "react";
 import * as THREE from "three";
 import {useFrame} from "@react-three/fiber";
 import {Billboard, Text} from "@react-three/drei";
-import {stringToHexColor} from "@/app/lib/utils";
+import {isValid, stringToHexColor} from "@/app/lib/utils";
 
-export function Satellites({satList, selectedSat}: { satList: SatelliteData[], selectedSat: number | undefined }) {
+export function Satellites({satList, selectedSat}: { satList: SatelliteData[], selectedSat?: number }) {
   const satellitesRef = useRef<THREE.Group>(null);
   const elapsedTimeRef = useRef(0);
 
@@ -15,7 +15,7 @@ export function Satellites({satList, selectedSat}: { satList: SatelliteData[], s
     }
     elapsedTimeRef.current += delta;
 
-    satList.forEach(([positions], satelliteIndex) => {
+    satList.forEach(({position: positions}, satelliteIndex) => {
       if (positions.length > 0) {
         const totalDuration = positions[positions.length - 1][3] - positions[0][3];
         const currentTime = positions[0][3] + (elapsedTimeRef.current % totalDuration);
@@ -43,33 +43,32 @@ export function Satellites({satList, selectedSat}: { satList: SatelliteData[], s
 
   return (
     <group ref={satellitesRef}>
-      {satList.map(([_, name], index) => (
-        <group key={index}>
-          <mesh>
-            <sphereGeometry args={[0.01, 32, 32]}/>
+      {satList.map(({name}, index) => (
+        <mesh key={index} name={name}>
+            <sphereGeometry args={[0.1, 32, 32]}/>
             <meshStandardMaterial
               color={
-                selectedSat !== undefined
+                isValid(selectedSat)
                   ? (index === selectedSat ? new THREE.Color('green') : new THREE.Color('white'))
                   : new THREE.Color(stringToHexColor(name))
               }
             />
-          </mesh>
-          <Billboard>
-            <Text
-              position={[0.02, -0.04, 0]} // Offset to bottom left corner
-              fontSize={0.05}
-              color={
-                selectedSat !== undefined
-                  ? (index === selectedSat ? 'green' : 'white')
-                  : stringToHexColor(name)
-              }
-              anchorX="left" // Align text to the left
-            >
-              {name}
-            </Text>
-          </Billboard>
-        </group>
+            <Billboard>
+              <Text
+                font={'FZYXJF_2.ttf'}
+                position={[0.3, -0.3, 0]} // Offset to bottom left corner
+                fontSize={0.3}
+                color={
+                  isValid(selectedSat)
+                    ? (index === selectedSat ? 'green' : 'white')
+                    : stringToHexColor(name)
+                }
+                anchorX="left" // Align text to the left
+              >
+                {name}
+              </Text>
+            </Billboard>
+        </mesh>
       ))}
     </group>
   );
