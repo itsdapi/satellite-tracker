@@ -4,10 +4,9 @@
 
 ![Overview](https://github.com/user-attachments/assets/549c67d1-c0f5-42c2-a834-e3af42fa0986)
 
-
 ![Focus view](https://github.com/user-attachments/assets/be735586-f280-4016-8bde-e69e8fff0eaf)
 
-When focus it looks like this
+![In action](https://github.com/user-attachments/assets/895d41ff-5552-452c-85f8-4c485ced2b63)
 
 
 This is a small project when I am working on my Lab Project, which is making a satellite tracker to be displayed on a big screen.
