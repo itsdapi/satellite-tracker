@@ -2,7 +2,12 @@
 
 > Powered by THREE.js, Next.js 14, with blazing fast speed (sort of..) 😎
 
-![apps](https://github.com/user-attachments/assets/92c3335f-1671-43fa-84a8-be9c481b3cf5)
+![Overview](https://github.com/user-attachments/assets/549c67d1-c0f5-42c2-a834-e3af42fa0986)
+
+
+![Focus view](https://github.com/user-attachments/assets/be735586-f280-4016-8bde-e69e8fff0eaf)
+
+When focus it looks like this
 
 
 This is a small project when I am working on my Lab Project, which is making a satellite tracker to be displayed on a big screen.
