@@ -1,11 +1,11 @@
-import {SatelliteData} from "@/app/lib/action/satellite";
 import {useRef} from "react";
 import * as THREE from "three";
 import {useFrame} from "@react-three/fiber";
 import {Billboard, Text} from "@react-three/drei";
 import {isValid, stringToHexColor} from "@/app/lib/utils";
+import {SatelliteOrbitData} from "@/app/lib/action/action-satellite-orbit";
 
-export function Satellites({satList, selectedSat}: { satList: SatelliteData[], selectedSat?: number }) {
+export function Satellites({satList, selectedSat}: { satList: SatelliteOrbitData[], selectedSat?: number }) {
   const satellitesRef = useRef<THREE.Group>(null);
   const elapsedTimeRef = useRef(0);
 

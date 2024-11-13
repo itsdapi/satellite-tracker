@@ -5,7 +5,6 @@ import {Canvas, useFrame, useThree} from "@react-three/fiber";
 import * as THREE from "three";
 import {Euler, Mesh, Vector3} from "three";
 import {useEffect, useRef, useState} from "react";
-import {calculateBatchTlePositions, fetchTles, SatelliteData} from "@/app/lib/action/satellite";
 import {CameraControls, Stats} from "@react-three/drei";
 import {button, buttonGroup, folder, useControls} from "leva";
 import {lookAtSatellite} from "@/app/lib/utils";
@@ -13,6 +12,8 @@ import Earth from "@/app/ui/earth";
 import StarField from "@/app/ui/feature/star-field";
 import {Satellites} from "@/app/ui/feature/satellites";
 import Orbits from "@/app/ui/feature/orbits";
+import {calculateBatchTlePositions, SatelliteOrbitData} from "@/app/lib/action/action-satellite-orbit";
+import {fetchTles} from "@/app/lib/action/fetch-tles";
 
 const {DEG2RAD} = THREE.MathUtils
 
@@ -41,7 +42,7 @@ export default function Home() {
 }
 
 function Scene() {
-  const [satList, setSatList] = useState<SatelliteData[]>([]);
+  const [satList, setSatList] = useState<SatelliteOrbitData[]>([]);
 
   // Fetch Data
   useEffect(() => {

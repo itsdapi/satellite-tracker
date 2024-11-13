@@ -27,7 +27,8 @@
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
     "three": "^0.169.0",
-    "three-fatline": "^0.7.1"
+    "three-fatline": "^0.7.1",
+    "tle.js": "^4.9.0"
   },
   "devDependencies": {
     "@types/node": "^20",

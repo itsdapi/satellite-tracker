@@ -62,6 +62,9 @@ dependencies:
   three-fatline:
     specifier: ^0.7.1
     version: 0.7.1(three@0.169.0)
+  tle.js:
+    specifier: ^4.9.0
+    version: 4.9.0
 
 devDependencies:
   '@types/node':
@@ -3525,6 +3528,10 @@ packages:
       is-regex: 1.1.4
     dev: true
 
+  /satellite.js@4.1.4:
+    resolution: {integrity: sha512-OGUrs1GoGKjy9FYbW2ZaM5slaPfJaYrcxjE3YQTeR/OGyFPCxb6HK22Chao55POU06pdmNAdW5rtKJURse0+XA==}
+    dev: false
+
   /satellite.js@5.0.0:
     resolution: {integrity: sha512-ie3yiJ2LJAJIhVUKdYhgp7V0btXKAMImDjRnuaNfJGl8rjwP2HwVIh4HLFcpiXYEiYwXc5fqh5+yZqCe6KIwWw==}
     dev: false
@@ -3951,6 +3958,13 @@ packages:
 
   /tinycolor2@1.6.0:
     resolution: {integrity: sha512-XPaBkWQJdsf3pLKJV9p4qN/S+fm2Oj8AIPo1BTUhg5oxkvm9+SVEGFdhyOz7tTdUTfvxMiAs4sp6/eZO2Ew+pw==}
+    dev: false
+
+  /tle.js@4.9.0:
+    resolution: {integrity: sha512-W3pLz/hvmo8LfACbXZqW86Q1DmdfD87xv5VGjONilZMzHDz29p3k3YW4exEz+SueDn1O+vByk/sFbO4/jIbaOg==}
+    engines: {node: '>=12'}
+    dependencies:
+      satellite.js: 4.1.4
     dev: false
 
   /to-regex-range@5.0.1:

@@ -10,3 +10,10 @@ export interface Pass {
   end: Date;
   maxElevation: number;
 }
+
+export type TleData = {
+  id: string,
+  name: string,
+  tle1: string,
+  tle2: string
+};

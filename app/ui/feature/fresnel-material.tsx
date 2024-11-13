@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import {AdditiveBlending, ShaderMaterialParameters} from "three";
+import {AdditiveBlending} from "three";
 
 interface FresnelMaterialProps {
   rimHex?: number,
@@ -9,7 +9,7 @@ interface FresnelMaterialProps {
 
 const color = '#00539d'
 
-export function FresnelMaterial({rimHex = 0x00539d, facingHex = 0x000000, opacity}: FresnelMaterialProps) {
+export default function FresnelMaterial({rimHex = 0x00539d, facingHex = 0x000000, opacity}: FresnelMaterialProps) {
   const uniforms = {
     color1: {value: new THREE.Color(rimHex)},
     color2: {value: new THREE.Color(facingHex)},

@@ -1,6 +1,6 @@
-import {SatellitePositionArray} from "@/app/lib/action/satellite";
 import {useEffect, useRef} from "react";
 import * as THREE from "three";
+import {SatellitePositionArray} from "@/app/lib/action/action-satellite-orbit";
 
 export function Orbit({positions}: { positions: SatellitePositionArray[] }) {
   const orbitRef = useRef<THREE.Group>(null);

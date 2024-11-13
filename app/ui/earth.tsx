@@ -1,8 +1,7 @@
 import {useRef} from "react";
 import {AdditiveBlending, Mesh, TextureLoader} from "three";
 import {useFrame, useLoader} from "@react-three/fiber";
-import StarField from "@/app/ui/feature/star-field";
-import {FresnelMaterial} from "@/app/ui/feature/fresnel-material";
+import FresnelMaterial from "@/app/ui/feature/fresnel-material";
 
 export default function Earth({radius = 2}: { radius?: number }) {
   const cloudRef = useRef<Mesh>(null);

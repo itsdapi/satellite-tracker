@@ -1,16 +1,16 @@
 'use client'
 
-import {SatelliteData} from "@/app/lib/action/satellite";
 import {useEffect, useMemo, useRef} from "react";
 import * as THREE from "three";
 import {Line2, LineGeometry, LineMaterial} from "three-fatline";
 import {extend} from "@react-three/fiber";
 import {isValid, stringToHexColor} from "@/app/lib/utils";
+import {SatelliteOrbitData} from "@/app/lib/action/action-satellite-orbit";
 
 extend({Line2, LineGeometry, LineMaterial});
 
 interface OrbitProps {
-  satList: SatelliteData[];
+  satList: SatelliteOrbitData[];
   selectedSat?: number;
   lineWidth?: number;
 }

@@ -1,7 +1,7 @@
-import {SatellitePositionArray} from "@/app/lib/action/satellite";
 import {useRef} from "react";
 import * as THREE from "three";
 import {useFrame} from "@react-three/fiber";
+import {SatellitePositionArray} from "@/app/lib/action/action-satellite-orbit";
 
 export function Satellite({positions}: { positions: SatellitePositionArray[] }) {
   const satelliteRef = useRef<THREE.Mesh>(null);

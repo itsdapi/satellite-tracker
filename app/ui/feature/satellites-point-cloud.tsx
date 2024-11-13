@@ -1,10 +1,10 @@
-import {SatelliteData} from "@/app/lib/action/satellite";
 import {useEffect, useMemo, useRef} from "react";
 import * as THREE from "three";
 import {TextureLoader} from "three";
 import {useFrame, useLoader} from "@react-three/fiber";
 import {generateSecondaryColor} from "@marko19907/string-to-color";
 import {config} from "@/app.config";
+import {SatelliteOrbitData} from "@/app/lib/action/action-satellite-orbit";
 
 const vertexShader = `
 attribute float size;
@@ -40,12 +40,12 @@ void main() {
  * @param selectedSat Current Selected Satellite, provide index of the satList to highlight
  * @constructor
  */
-export function SatellitesPointCloud({satList, selectedSat}: { satList: SatelliteData[], selectedSat?: number }) {
+export function SatellitesPointCloud({satList, selectedSat}: { satList: SatelliteOrbitData[], selectedSat?: number }) {
   const sprite = useLoader(TextureLoader, 'sprites/disc-directional.png');
   const pointsRef = useRef<THREE.Points>(null);
   const elapsedTimeRef = useRef(0);
 
-  const numPoints = useMemo(() => satList.reduce((sum, [positions]) => sum + positions.length, 0), [satList]);
+  const numPoints = useMemo(() => satList.reduce((sum, satellite) => sum + satellite.position.length, 0), [satList]);
   const positions = useMemo(() => new Float32Array(numPoints * 3), [numPoints]);
 
   const pointColor = useRef(new THREE.Color(0xffffff));
@@ -53,12 +53,13 @@ export function SatellitesPointCloud({satList, selectedSat}: { satList: Satellit
   const colorsArray = useMemo(() => {
     const colors = new Float32Array(numPoints * 3);
     let index = 0;
-    satList.forEach(([positions, name]) => {
+    satList.forEach((satellite) => {
+      const {position, name} = satellite;
       const hslString = generateSecondaryColor(name, config.colorOptions);
       const hslValue = hslString.match(/\d+/g)?.map(Number);
       if (!hslValue) return;
       const color = new THREE.Color().setHSL(hslValue[0] / 360, hslValue[1] / 100, hslValue[2] / 100);
-      for (let i = 0; i < positions.length; i++) {
+      for (let i = 0; i < position.length; i++) {
         color.toArray(colors, index * 3);
         index++;
       }
@@ -76,9 +77,9 @@ export function SatellitesPointCloud({satList, selectedSat}: { satList: Satellit
       const newColorsArray = new Float32Array(numPoints * 3);
       let index = 0;
       satList.forEach((satellite, satIndex) => {
-        const [positions] = satellite;
+        const {position} = satellite;
         const color = new THREE.Color(satIndex === selectedSat ? 0x00ff00 : 0xffffff);
-        for (let i = 0; i < positions.length; i++) {
+        for (let i = 0; i < position.length; i++) {
           color.toArray(newColorsArray, index * 3);
           index++;
         }
@@ -98,18 +99,19 @@ export function SatellitesPointCloud({satList, selectedSat}: { satList: Satellit
     const positionsArray = pointsRef.current?.geometry.attributes.position.array as Float32Array;
 
     let index = 0;
-    satList.forEach(([positions]) => {
-      if (positions.length > 0) {
-        const totalDuration = positions[positions.length - 1][3] - positions[0][3];
-        const currentTime = positions[0][3] + (elapsedTimeRef.current % totalDuration);
+    satList.forEach((satellite) => {
+      const {position} = satellite;
+      if (position.length > 0) {
+        const totalDuration = position[position.length - 1][3] - position[0][3];
+        const currentTime = position[0][3] + (elapsedTimeRef.current % totalDuration);
 
         let i = 0;
-        while (i < positions.length - 1 && positions[i][3] < currentTime) {
+        while (i < position.length - 1 && position[i][3] < currentTime) {
           i++;
         }
 
-        const [x1, y1, z1, t1] = positions[i - 1];
-        const [x2, y2, z2, t2] = positions[i];
+        const [x1, y1, z1, t1] = position[i - 1];
+        const [x2, y2, z2, t2] = position[i];
 
         const t = (currentTime - t1) / (t2 - t1);
         const x = x1 + t * (x2 - x1);
