@@ -11,9 +11,15 @@ import {lookAtSatellite} from "@/app/lib/utils";
 import Earth from "@/app/ui/earth";
 import StarField from "@/app/ui/feature/star-field";
 import {Satellites} from "@/app/ui/feature/satellites";
-import Orbits from "@/app/ui/feature/orbits";
-import {calculateBatchTlePositions, SatelliteOrbitData} from "@/app/lib/action/action-satellite-orbit";
+import {
+  calculateBatchTlePositions,
+  SatelliteOrbitData,
+  tleToScreenPosition
+} from "@/app/lib/action/action-satellite-orbit";
 import {fetchTles} from "@/app/lib/action/fetch-tles";
+import dynamic from "next/dynamic";
+
+const Orbits = dynamic(() => import('@/app/ui/feature/orbits'), {ssr: false})
 
 const {DEG2RAD} = THREE.MathUtils
 
@@ -50,8 +56,10 @@ function Scene() {
       const onlineTles = await fetchTles(10);
       if (onlineTles) {
         console.log("Calculating tles...");
-        const dotsList = await calculateBatchTlePositions(onlineTles, {numPoints: 200, globeRadius});
+        const dotsList = await calculateBatchTlePositions(onlineTles, {numPoints: 200, globeRadius: 10});
+        // tleToScreenPosition(onlineTles[0].tle1, onlineTles[0].tle2, {numPoints: 80, globeRadius: 10}).then(console.log)
         setSatList(dotsList);
+        console.log('list:', dotsList);
       }
     };
     fetchPositions().then();

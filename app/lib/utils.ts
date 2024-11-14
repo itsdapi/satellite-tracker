@@ -60,7 +60,7 @@ export function lookAtSatellite(
   satellite: Mesh,
   options: lookAtSatelliteOption = {}
 ) {
-  const { earthCenter = [0, 0, 0], offset = [0, 0, 0] } = options;
+  const {earthCenter = [0, 0, 0], offset = [0, 0, 0]} = options;
 
   const earthCenterVector = new Vector3(...earthCenter);
   const satVector = new Vector3().subVectors(satellite.position, earthCenterVector).normalize();
@@ -73,4 +73,19 @@ export function lookAtSatellite(
   extendedVector.applyMatrix4(rotationMatrix);
 
   cameraControls.setPosition(extendedVector.x, extendedVector.y, extendedVector.z, true).then();
+}
+
+export function geoToCartesian(
+  longitude: number,
+  latitude: number,
+  radius: number = 1
+): [number, number, number] {
+  const phi = longitude * (Math.PI / 180);
+  const theta = (90 - latitude) * (Math.PI / 180);
+
+  const x = -radius * Math.sin(theta) * Math.cos(phi);
+  const y = radius * Math.cos(theta);
+  const z = radius * Math.sin(theta) * Math.sin(phi);
+
+  return [x, y, z];
 }

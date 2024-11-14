@@ -2,14 +2,12 @@
 
 import {eciToGeodetic, gstime, propagate, twoline2satrec} from "satellite.js";
 import {memoize} from "nextjs-better-unstable-cache";
-import * as THREE from "three";
 import {TleData} from "@/app/lib/type";
-import {dateToUnixTimestampInSeconds} from "@/app/lib/utils";
+import {dateToUnixTimestampInSeconds, geoToCartesian, radiansToDegrees} from "@/app/lib/utils";
 
 interface TleToScreenPositionOptions {
   earthRadius?: number,
   globeRadius?: number,
-  scaleFactor?: number,
   numPoints?: number
 }
 
@@ -47,7 +45,6 @@ export async function tleToScreenPosition(tle1: string, tle2: string, options: T
   const {
     earthRadius = 6371e3,
     globeRadius = 1,
-    scaleFactor = globeRadius / earthRadius,
     numPoints = 100
   } = options;
 
@@ -56,9 +53,9 @@ export async function tleToScreenPosition(tle1: string, tle2: string, options: T
   const period = 2 * Math.PI / satrec.no;
   const step = period / numPoints;
 
-  const constantGmst = gstime(new Date());
+  const scaleFactor = globeRadius / earthRadius;
 
-  const rotationMatrix = new THREE.Matrix4().makeRotationX(-Math.PI / 2);
+  const constantGmst = gstime(new Date());
 
   console.log('Calculating positions for', satrec.satnum, 'with', numPoints, 'points');
   for (let i = 0; i <= numPoints; i++) {
@@ -71,16 +68,12 @@ export async function tleToScreenPosition(tle1: string, tle2: string, options: T
     if (positionEci && typeof (positionEci) !== "boolean") {
       const positionGd = eciToGeodetic(positionEci, constantGmst);
       const height = positionGd.height * 1000;
+      const longitude = radiansToDegrees(positionGd.longitude)
+      const latitude = radiansToDegrees(positionGd.latitude)
 
       const radius = (earthRadius + height) * scaleFactor;
-      const x = radius * Math.cos(positionGd.latitude) * Math.cos(positionGd.longitude);
-      const y = radius * Math.cos(positionGd.latitude) * Math.sin(positionGd.longitude);
-      const z = radius * Math.sin(positionGd.latitude);
-
-      const vector = new THREE.Vector3(x, y, z);
-      vector.applyMatrix4(rotationMatrix);
-
-      dots.push([vector.x, vector.y, vector.z, dateToUnixTimestampInSeconds(time)]);
+      const [x, y, z] = geoToCartesian(longitude, latitude, radius);
+      dots.push([x, y, z, dateToUnixTimestampInSeconds(time)]);
     }
   }
   return dots as SatellitePositionArray[]
