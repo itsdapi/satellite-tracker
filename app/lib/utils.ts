@@ -89,3 +89,32 @@ export function geoToCartesian(
 
   return [x, y, z];
 }
+
+interface SunAngleToPositionOptionProps {
+  tilt?: number;
+  radius?: number;
+}
+
+export function sunAngleToPosition(angle: number, options: SunAngleToPositionOptionProps = {}): [number, number, number] {
+  const {tilt = 23.5, radius = 10} = options
+
+  const tiltRad = degreesToRadians(tilt);
+  return [
+    Math.cos(angle) * radius,
+    Math.sin(tiltRad) * Math.sin(angle) * radius,
+    Math.cos(tiltRad) * Math.sin(angle) * radius
+  ];
+}
+
+export function nowToSunAngle(now: number): number {
+  const time = new Date(now);
+  const hours = time.getUTCHours();
+  const minutes = time.getUTCMinutes();
+  const seconds = time.getUTCSeconds();
+
+  const dayTime = hours * 3600 + minutes * 60 + seconds;
+  const dayLength = 24 * 3600;
+
+  return (dayTime / dayLength) * Math.PI * 2;
+}
+
