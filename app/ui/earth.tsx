@@ -25,15 +25,15 @@ export default function Earth({radius = 2}: { radius?: number }) {
       <Geometry/>
       <meshStandardMaterial map={dayTexture}/>
     </mesh>
-    <mesh name={'nightMap'} scale={1.001}>
+    <mesh name={'nightMap'} scale={1.01}>
       <Geometry/>
       <meshBasicMaterial map={nightTexture} blending={AdditiveBlending}/>
     </mesh>
-    <mesh scale={1.008} name={'cloud'} ref={cloudRef}>
+    <mesh scale={1.024} name={'cloud'} ref={cloudRef}>
       <Geometry/>
       <meshStandardMaterial map={cloudTexture} transparent opacity={0.9} blending={AdditiveBlending}/>
     </mesh>
-    <mesh scale={1.01}>
+    <mesh scale={1.026}>
       <Geometry/>
       <FresnelMaterial opacity={0.8}/>
     </mesh>

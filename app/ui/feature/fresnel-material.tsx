@@ -7,8 +7,6 @@ interface FresnelMaterialProps {
   opacity?: number,
 }
 
-const color = '#00539d'
-
 export default function FresnelMaterial({rimHex = 0x00539d, facingHex = 0x000000, opacity}: FresnelMaterialProps) {
   const uniforms = {
     color1: {value: new THREE.Color(rimHex)},

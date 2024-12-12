@@ -7,7 +7,6 @@ interface SunlightProps {
 }
 
 export default function Sunlight(props: SunlightProps) {
-  // return <TimeRender render={(now) => <SunlightTimeWrapper now={now} {...props} />} />;
   return <SunlightTimeWrapper now={Date.now()} {...props} />;
 }
 
