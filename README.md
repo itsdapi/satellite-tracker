@@ -2,9 +2,11 @@
 
 > Powered by THREE.js, Next.js 14, with blazing fast speed (sort of...) 😎
 
-![Overview](https://github.com/user-attachments/assets/549c67d1-c0f5-42c2-a834-e3af42fa0986)
+![CleanShot 2024-12-12 at 11 35 56](https://github.com/user-attachments/assets/9afb773f-7b9f-4738-b94f-eaa02defc000)
 
-![Focus view](https://github.com/user-attachments/assets/be735586-f280-4016-8bde-e69e8fff0eaf)
+![CleanShot 2024-12-12 at 11 35 27](https://github.com/user-attachments/assets/8a800a94-988c-4af4-96f3-256f0e1d2cc4)
+
+![Overview](https://github.com/user-attachments/assets/549c67d1-c0f5-42c2-a834-e3af42fa0986)
 
 ![In action](https://github.com/user-attachments/assets/895d41ff-5552-452c-85f8-4c485ced2b63)
 
